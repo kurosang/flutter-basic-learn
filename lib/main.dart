@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_tt/app_lifecycle.dart';
+import 'package:flutter_tt/flutter_layout_page.dart';
+import 'package:flutter_tt/flutter_widget_lifecycle.dart';
+import 'package:flutter_tt/launch_page.dart';
+import 'package:flutter_tt/less_group_page.dart';
+import 'package:flutter_tt/photo_page.dart';
+import 'package:flutter_tt/plugin_use.dart';
+import 'package:flutter_tt/res_page.dart';
+import 'package:flutter_tt/stateful_group_page.dart';
+
+import 'gesture_page.dart';
+
+void main() {
+  runApp(DynamicTheme());
+}
+
+
+class DynamicTheme extends StatefulWidget {
+  @override
+  _DynamicThemeState createState() => _DynamicThemeState();
+}
+
+class _DynamicThemeState extends State<DynamicTheme> {
+  Brightness _brightness=Brightness.light;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // fontFamily: 'AkayaTelivigala', // 将该字体运用到全局
+        brightness: _brightness, // 夜间模式
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(title: Text("如何创建和使用flutter的路由和导航"),),
+        body: Column(
+          children: [
+            ElevatedButton(onPressed: (){
+              setState(() {
+                _brightness = _brightness == Brightness.dark ? Brightness.light: Brightness.dark;
+              });
+            },child: Text('切换模式change',style: TextStyle(fontFamily: 'AkayaTelivigala'),),),
+            RouteNavigator()
+          ],
+        ),
+      ),
+      routes: <String, WidgetBuilder>{
+        'plugin': (BuildContext context) => PluginUse(),
+        'less': (BuildContext context) => LessGroupPage(),
+        'ful': (BuildContext context) => StateFulGroup(),
+        'layout': (BuildContext context) => FlutterLayoutPage(),
+        'gesture': (BuildContext context) => GesturePage(),
+        'res': (BuildContext context) => ResPage(),
+        'launch': (BuildContext context) => LaunchPage(),
+        'widgetLifecycle': (BuildContext context) => WidgetLifecycle(),
+        'appLifecycle': (BuildContext context) => AppLifecycle(),
+        'photoApp': (BuildContext context) => PhotoApp(),
+      },
+    );
+  }
+}
+
+
+
+
+class RouteNavigator extends StatefulWidget {
+  @override
+  _RouteNavigatorState createState() => _RouteNavigatorState();
+}
+
+class _RouteNavigatorState extends State<RouteNavigator> {
+  bool byName = false;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(children: [
+        SwitchListTile(title: Text('${byName?'':'不'}通过路由名跳转'),value: byName, onChanged: (val){
+          setState(() {
+            byName = val;
+          });
+        }),
+        _item('如何使用flutter plugin', PluginUse(), 'plugin'),
+        _item('StatelessWidget与基础组件', LessGroupPage(), 'less'),
+        _item('StatefulWidget与基础组件', StateFulGroup(), 'ful'),
+        _item('Flutter布局开发', FlutterLayoutPage(), 'layout'),
+        _item('如何检测用户手势以及处理点击事件', GesturePage(), 'gesture'),
+        _item('如何导入和使用 Flutter 的资源文件', ResPage(), 'res'),
+        _item('如何打开第三方应用', LaunchPage(), 'launch'),
+        _item('Flutter页面生命周期', WidgetLifecycle(), 'widgetLifecycle'),
+        _item('Flutter应用的生命周期', AppLifecycle(), 'appLifecycle'),
+        _item('拍照APP开发', PhotoApp(), 'photoApp'),
+      ],),
+    );
+  }
+
+  _item(String title, page, String routeName) {
+    return Container(
+      child: ElevatedButton(onPressed: (){
+        // 两种方式跳转
+        // 有配置routes则使用第一种
+        if(byName){
+          Navigator.pushNamed((context), routeName);
+        }else{
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> page));
+        }
+      },
+      child: Text(title),)
+    );
+  }
+}
