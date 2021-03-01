@@ -23,7 +23,6 @@ class DynamicTheme extends StatefulWidget {
 
 class _DynamicThemeState extends State<DynamicTheme> {
   Brightness _brightness=Brightness.light;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,6 +36,7 @@ class _DynamicThemeState extends State<DynamicTheme> {
         appBar: AppBar(title: Text("如何创建和使用flutter的路由和导航"),),
         body: Column(
           children: [
+            Image.network('https://www.devio.org/img/avatar.png'),
             ElevatedButton(onPressed: (){
               setState(() {
                 _brightness = _brightness == Brightness.dark ? Brightness.light: Brightness.dark;
@@ -60,6 +60,7 @@ class _DynamicThemeState extends State<DynamicTheme> {
       },
     );
   }
+
 }
 
 
