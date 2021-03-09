@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tt/animated_builder.dart';
+import 'package:flutter_tt/animation.dart';
 import 'package:flutter_tt/app_lifecycle.dart';
 import 'package:flutter_tt/flutter_layout_page.dart';
 import 'package:flutter_tt/flutter_widget_lifecycle.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_tt/plugin_use.dart';
 import 'package:flutter_tt/res_page.dart';
 import 'package:flutter_tt/stateful_group_page.dart';
 
+import 'animated_widget.dart';
 import 'gesture_page.dart';
 
 void main() {
@@ -33,18 +36,20 @@ class _DynamicThemeState extends State<DynamicTheme> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text("如何创建和使用flutter的路由和导航"),),
-        body: Column(
-          children: [
-            Image.network('https://www.devio.org/img/avatar.png'),
-            ElevatedButton(onPressed: (){
-              setState(() {
-                _brightness = _brightness == Brightness.dark ? Brightness.light: Brightness.dark;
-              });
-            },child: Text('切换模式change',style: TextStyle(fontFamily: 'AkayaTelivigala'),),),
-            RouteNavigator()
-          ],
-        ),
+        appBar: AppBar(title: Text("flutter基础"),),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.network('https://www.devio.org/img/avatar.png'),
+              ElevatedButton(onPressed: (){
+                setState(() {
+                  _brightness = _brightness == Brightness.dark ? Brightness.light: Brightness.dark;
+                });
+              },child: Text('切换模式change',style: TextStyle(fontFamily: 'AkayaTelivigala'),),),
+              RouteNavigator()
+            ],
+          ),
+        )
       ),
       routes: <String, WidgetBuilder>{
         'plugin': (BuildContext context) => PluginUse(),
@@ -57,6 +62,9 @@ class _DynamicThemeState extends State<DynamicTheme> {
         'widgetLifecycle': (BuildContext context) => WidgetLifecycle(),
         'appLifecycle': (BuildContext context) => AppLifecycle(),
         'photoApp': (BuildContext context) => PhotoApp(),
+        'animation': (BuildContext context) => AnimationPage(),
+        'animatedWidget': (BuildContext context) => AnimatedWidgetPage(),
+        'animatedBuilder': (BuildContext context) => AnimatedBuilderPage(),
       },
     );
   }
@@ -92,6 +100,9 @@ class _RouteNavigatorState extends State<RouteNavigator> {
         _item('Flutter页面生命周期', WidgetLifecycle(), 'widgetLifecycle'),
         _item('Flutter应用的生命周期', AppLifecycle(), 'appLifecycle'),
         _item('拍照APP开发', PhotoApp(), 'photoApp'),
+        _item('如何使用动画animation', AnimationPage(), 'animation'),
+        _item('如何使用动画animatedWidget', AnimatedWidgetPage(), 'animatedWidget'),
+        _item('如何使用动画animatedBuilder', AnimatedBuilderPage(), 'animatedBuilder'),
       ],),
     );
   }
