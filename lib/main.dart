@@ -4,11 +4,14 @@ import 'package:flutter_tt/animation.dart';
 import 'package:flutter_tt/app_lifecycle.dart';
 import 'package:flutter_tt/flutter_layout_page.dart';
 import 'package:flutter_tt/flutter_widget_lifecycle.dart';
+import 'package:flutter_tt/future_page.dart';
 import 'package:flutter_tt/launch_page.dart';
 import 'package:flutter_tt/less_group_page.dart';
+import 'package:flutter_tt/listview_page.dart';
 import 'package:flutter_tt/photo_page.dart';
 import 'package:flutter_tt/plugin_use.dart';
 import 'package:flutter_tt/res_page.dart';
+import 'package:flutter_tt/shared_preferences_page.dart';
 import 'package:flutter_tt/stateful_group_page.dart';
 
 import 'animated_widget.dart';
@@ -65,6 +68,9 @@ class _DynamicThemeState extends State<DynamicTheme> {
         'animation': (BuildContext context) => AnimationPage(),
         'animatedWidget': (BuildContext context) => AnimatedWidgetPage(),
         'animatedBuilder': (BuildContext context) => AnimatedBuilderPage(),
+        'future': (BuildContext context) => FuturePage(),
+        'sharedPreferences': (BuildContext context) => SharedPreferencesPage(),
+        'listView': (BuildContext context) => ListViewPage(),
       },
     );
   }
@@ -103,6 +109,9 @@ class _RouteNavigatorState extends State<RouteNavigator> {
         _item('如何使用动画animation', AnimationPage(), 'animation'),
         _item('如何使用动画animatedWidget', AnimatedWidgetPage(), 'animatedWidget'),
         _item('如何使用动画animatedBuilder', AnimatedBuilderPage(), 'animatedBuilder'),
+        _item('Future与FutureBuilder实用技巧', FuturePage(), 'future'),
+        _item('shared_preferences本地存储', SharedPreferencesPage(), 'sharedPreferences'),
+        _item('基于ListView实现水平和垂直方式滚动的列表', ListViewPage(), 'listView'),
       ],),
     );
   }
